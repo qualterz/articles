@@ -1,0 +1,90 @@
+﻿<UserControl x:Class="Articles.View.ExploreTabControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Articles.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+
+        <GroupBox Grid.Column="0"
+                  Header="Posts">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0" 
+                        Orientation="Horizontal">
+                    <Button Command="{Binding SwitchSortNewestCommand}">Newest</Button>
+                    <Button Command="{Binding SwitchSortBestCommand}">Best</Button>
+                    <Button Command="{Binding ToggleFilterOwnCommand}">Own</Button>
+                </StackPanel>
+
+                <ListBox Grid.Row="1"
+                         ItemsSource="{Binding ViewArticles}"
+                         SelectedItem="{Binding SelectedArticle}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=Title}"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.Column="0"
+                            Command="{Binding VoteCommand}">Vote</Button>
+
+                    <StackPanel Grid.Column="1"
+                                Orientation="Vertical">
+                        <TextBlock VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"
+                                   FontWeight="SemiBold">Votes</TextBlock>
+                        <TextBlock VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"
+                                   Text="{Binding SelectedArticleVotes, Mode=OneWay}"/>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </GroupBox>
+
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <GroupBox Grid.Row="0"
+                  Header="Preview"
+                  Content="{Binding ArticleView}"></GroupBox>
+
+            <Grid Grid.Row="1" Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left"
+                            Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center"
+                               HorizontalAlignment="Center">
+                        <Run FontWeight="SemiBold">Author</Run>
+                        <Run Text="{Binding SelectedArticleAuthor, Mode=OneWay}"></Run>
+                    </TextBlock>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>
